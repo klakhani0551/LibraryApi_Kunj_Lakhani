@@ -18,8 +18,27 @@ public class BooksController : ControllerBase
     [HttpPost]
     public IActionResult PostBook(Book book)
     {
+        if(string.IsNullOrWhiteSpace(book.Title))
+        {
+            return BadRequest(new
+            {
+                error = "InvalidParameter",
+                message = "Title must not be empty"
+            });
+        }
+
+        if(book.Quantity <= 0)
+        {
+            return BadRequest(new
+            {
+                error = "InvalidParameter",
+                message = "Quantity must be greater than zero"
+            });
+        }
+
         book.Id = LibraryStore.Books.Count + 1;
         LibraryStore.Books.Add(book);
-        return DayOfWeek(book);
+        
+        return Ok(book);
     }
 }
