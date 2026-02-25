@@ -6,11 +6,11 @@ using System.Runtime.Versioning;
 namespace LibraryApi.Controllers;
 
 [ApiController]
-[ResourceConsumption("api/books")]
+[Route("api/books")]
 public class BooksController : ControllerBase
 {
     [HttpGet]
-    public IResultResult GetAll()
+    public IActionResult GetAll()
     {
         return Ok(LibraryStore.Books);
     }
@@ -38,7 +38,7 @@ public class BooksController : ControllerBase
 
         book.Id = LibraryStore.Books.Count + 1;
         LibraryStore.Books.Add(book);
-        
+
         return Ok(book);
     }
 }
